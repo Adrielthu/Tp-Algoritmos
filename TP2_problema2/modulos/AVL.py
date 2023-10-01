@@ -64,6 +64,12 @@ class AVL():
         rotRaiz.factorEquilibrio = rotRaiz.factorEquilibrio + 1 - min(nuevaRaiz.factorEquilibrio, 0)
         nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio + 1 + max(rotRaiz.factorEquilibrio, 0)
 
+    def rotarDerecha(self,rotRaiz):
+        nuevaRaiz = rotRaiz.hijoIzquierdo
+        rotRaiz.hijoIzquierdo = nuevaRaiz.hijoDerecho
+
+        pass
+
     def reequilibrar(self,nodo):
         if nodo.factorEquilibrio < 0:
                 if nodo.hijoDerecho.factorEquilibrio > 0:
@@ -77,6 +83,7 @@ class AVL():
                     self.rotarDerecha(nodo)
                 else:
                     self.rotarDerecha(nodo)
+
     def tieneHijoIzquierdo(self):
         return self.hijoIzquierdo
 
