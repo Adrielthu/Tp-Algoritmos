@@ -1,13 +1,15 @@
 class NodoArbol:
-    def __init__(self,datoInicial):
-        self.dato = datoInicial
-        self.hijoDerecho = None
-        self.hijoIzquierdo = None
+    def __init__(self,clave, valor, padre=None, izquierdo=None, derecho=None):
+        self.clave = clave
+        self.cargaUtil = valor
+        self.hijoDerecho = derecho
+        self.hijoIzquierdo = izquierdo
+        self.padre = padre
 
 class AVL():
     def __init__(self):
-        
-        pass
+        self.raiz = None
+
     def agregar(self,clave,valor):
         if self.raiz:
             self._agregar(clave,valor,self.raiz)
