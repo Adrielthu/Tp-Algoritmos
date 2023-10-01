@@ -5,10 +5,12 @@ class NodoArbol:
         self.hijoDerecho = derecho
         self.hijoIzquierdo = izquierdo
         self.padre = padre
+        self.factorEquilibrio = 0
 
 class AVL():
     def __init__(self):
         self.raiz = None
+        self.tamano = 0
 
     def agregar(self,clave,valor):
         if self.raiz:
@@ -43,6 +45,7 @@ class AVL():
 
             if nodo.padre.factorEquilibrio != 0:
                     self.actualizarEquilibrio(nodo.padre)
+
     def rotarIzquierda(self,rotRaiz):
         nuevaRaiz = rotRaiz.hijoDerecho
         rotRaiz.hijoDerecho = nuevaRaiz.hijoIzquierdo
@@ -74,3 +77,17 @@ class AVL():
                     self.rotarDerecha(nodo)
                 else:
                     self.rotarDerecha(nodo)
+    def tieneHijoIzquierdo(self):
+        return self.hijoIzquierdo
+
+    def tieneHijoDerecho(self):
+        return self.hijoDerecho
+
+    def esHijoIzquierdo(self):
+        return self.padre and self.padre.hijoIzquierdo == self
+
+    def esHijoDerecho(self):
+        return self.padre and self.padre.hijoDerecho == self
+
+    def esRaiz(self):
+        return not self.padre
