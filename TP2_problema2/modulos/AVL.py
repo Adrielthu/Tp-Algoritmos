@@ -6,6 +6,20 @@ class NodoArbol:
         self.hijoIzquierdo = izquierdo
         self.padre = padre
         self.factorEquilibrio = 0
+    def tieneHijoIzquierdo(self):
+        return self.hijoIzquierdo
+
+    def tieneHijoDerecho(self):
+        return self.hijoDerecho
+
+    def esHijoIzquierdo(self):
+        return self.padre and self.padre.hijoIzquierdo == self
+
+    def esHijoDerecho(self):
+        return self.padre and self.padre.hijoDerecho == self
+
+    def esRaiz(self):
+        return not self.padre
 
     def tieneHijoIzquierdo(self):
         return self.hijoIzquierdo
@@ -107,8 +121,8 @@ class AVL():
                 rotRaiz.padre.hijoDerecho = nuevaRaiz
         nuevaRaiz.hijoDerecho = rotRaiz
         rotRaiz.padre = nuevaRaiz
-        rotRaiz.factorEquilibrio = rotRaiz.factorEquilibrio + 1 - min(nuevaRaiz.factorEquilibrio, 0)
-        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio + 1 + max(rotRaiz.factorEquilibrio, 0)
+        rotRaiz.factorEquilibrio += (-1 - max(nuevaRaiz.factorEquilibrio, 0))
+        nuevaRaiz.factorEquilibrio += (-1 - max(rotRaiz.factorEquilibrio, 0))
 
     def reequilibrar(self,nodo):
         if nodo.factorEquilibrio < 0:
@@ -128,6 +142,7 @@ class AVL():
         if nodo:
             self.inorden(nodo.hijoIzquierdo)
             print(nodo.clave, end=" ")
+<<<<<<< HEAD
             self.inorden(nodo.hijoDerecho)
 
 
@@ -142,3 +157,6 @@ for clave in claves:
     raiz = arbol.agregar(clave, raiz)
 
 print(arbol.inorden(arbol.raiz))
+=======
+            self.inorden(nodo.derecha)
+>>>>>>> 316424d6faef09a7a70f1774781eff5461a62e7b
