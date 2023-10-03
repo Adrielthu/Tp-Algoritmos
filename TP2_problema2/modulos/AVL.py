@@ -109,6 +109,12 @@ class AVL():
                 else:
                     self.rotarDerecha(nodo)
 
+    def inorden(self, nodo):
+        if nodo:
+            self.inorden(nodo.izquierda)
+            print(nodo.clave, end=" ")
+            self.inorden(nodo.derecha)
+
     def tieneHijoIzquierdo(self):
         return self.hijoIzquierdo
 
