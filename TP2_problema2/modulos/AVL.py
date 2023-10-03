@@ -7,6 +7,21 @@ class NodoArbol:
         self.padre = padre
         self.factorEquilibrio = 0
 
+    def tieneHijoIzquierdo(self):
+        return self.hijoIzquierdo
+
+    def tieneHijoDerecho(self):
+        return self.hijoDerecho
+
+    def esHijoIzquierdo(self):
+        return self.padre and self.padre.hijoIzquierdo == self
+
+    def esHijoDerecho(self):
+        return self.padre and self.padre.hijoDerecho == self
+
+    def esRaiz(self):
+        return not self.padre
+    
 class AVL():
     def __init__(self):
         self.raiz = None
@@ -111,21 +126,19 @@ class AVL():
 
     def inorden(self, nodo):
         if nodo:
-            self.inorden(nodo.izquierda)
+            self.inorden(nodo.hijoIzquierdo)
             print(nodo.clave, end=" ")
-            self.inorden(nodo.derecha)
+            self.inorden(nodo.hijoDerecho)
 
-    def tieneHijoIzquierdo(self):
-        return self.hijoIzquierdo
 
-    def tieneHijoDerecho(self):
-        return self.hijoDerecho
+    
 
-    def esHijoIzquierdo(self):
-        return self.padre and self.padre.hijoIzquierdo == self
+arbol = AVL()
 
-    def esHijoDerecho(self):
-        return self.padre and self.padre.hijoDerecho == self
+raiz = None
+claves = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]
+    
+for clave in claves:
+    raiz = arbol.agregar(clave, raiz)
 
-    def esRaiz(self):
-        return not self.padre
+print(arbol.inorden(arbol.raiz))
