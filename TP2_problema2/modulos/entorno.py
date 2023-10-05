@@ -7,7 +7,7 @@ class TemperaturasDB:
         self.avl.agregar(temperatura, fecha)
 
     def devolver_temperatura(self, fecha):
-        pass
+        self.avl.obtener(fecha)
     
     def min_temp_rango(self, fecha1, fecha2):
         pass

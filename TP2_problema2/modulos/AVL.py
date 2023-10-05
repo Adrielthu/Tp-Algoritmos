@@ -148,7 +148,25 @@ class AVL():
             yield from self.inorden_iter(nodo.hijoDerecho)
 
     
+    def obtener(self,clave):
+        if self.raiz:
+            res = self._obtener(clave,self.raiz)
+            if res:
+                return res.cargaUtil
+            else:
+                return None
+        else:
+            return None
 
+    def _obtener(self,clave,nodoActual):
+        if not nodoActual:
+            return None
+        elif nodoActual.clave == clave:
+            return nodoActual
+        elif clave < nodoActual.clave:
+            return self._obtener(clave,nodoActual.hijoIzquierdo)
+        else:
+            return self._obtener(clave,nodoActual.hijoDerecho)
     
 
 arbol = AVL()
@@ -159,6 +177,10 @@ claves = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]
 for clave in claves:
     raiz = arbol.agregar(clave, raiz)
 
+arbol.agregar(100,'Axel Escalante')
+
 #print(arbol.inorden(arbol.raiz))
 for clave in arbol:
      print(clave)
+
+print(arbol.obtener(100))
