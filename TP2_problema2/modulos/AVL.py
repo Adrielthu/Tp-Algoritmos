@@ -138,13 +138,14 @@ class AVL():
                 else:
                     self.rotarDerecha(nodo)
 
-    def inorden(self, nodo):
-        if nodo:
-            self.inorden(nodo.hijoIzquierdo)
-            print(nodo.clave, end=" ")
-<<<<<<< HEAD
-            self.inorden(nodo.hijoDerecho)
+    def __iter__(self):
+        return self.inorden_iter(self.raiz)
 
+    def inorden_iter(self, nodo):
+        if nodo:
+            yield from self.inorden_iter(nodo.hijoIzquierdo)
+            yield nodo.clave
+            yield from self.inorden_iter(nodo.hijoDerecho)
 
     
 
@@ -156,7 +157,6 @@ claves = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]
 for clave in claves:
     raiz = arbol.agregar(clave, raiz)
 
-print(arbol.inorden(arbol.raiz))
-=======
-            self.inorden(nodo.derecha)
->>>>>>> 316424d6faef09a7a70f1774781eff5461a62e7b
+#print(arbol.inorden(arbol.raiz))
+for clave in arbol:
+     print(clave)
