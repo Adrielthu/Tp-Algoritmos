@@ -49,7 +49,7 @@ class TemperaturasDB:
 
         for fecha in self.avl:
             if fecha >= fecha1 and fecha <=fecha2:
-                print(f'{fecha.clave}: temperatura {fecha.cargaUtil}°C')
+                print(f'{fecha}: temperatura {self.avl.obtener(fecha)}°C')
 
     def cantidad_muestras(self):
         return self.avl.tamano
