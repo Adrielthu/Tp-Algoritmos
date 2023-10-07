@@ -22,15 +22,6 @@ class NodoArbol:
     def esRaiz(self):
         return not self.padre
 
-    def tieneHijoIzquierdo(self):
-        return self.hijoIzquierdo
-
-    def tieneHijoDerecho(self):
-        return self.hijoDerecho
-
-    def esRaiz(self):
-        return not self.padre
-
     def esHoja(self):
         return not (self.hijoDerecho or self.hijoIzquierdo)
 
@@ -90,21 +81,10 @@ class NodoArbol:
                     self.padre.hijoDerecho = self.hijoDerecho
                 self.hijoDerecho.padre = self.padre
 
-
-    def __iter__(self):
-        if self:
-            if self.tieneHijoIzquierdo():
-                for elem in self.hijoIzquierdo:
-                    yield elem
-            yield self.clave
-            if self.tieneHijoDerecho():
-                for elem in self.hijoDerecho:
-                    yield elem
+# --------------------------------------------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------------------------------------------
 
-
-# --------------------------------------------------------------------------------------------------------------
 class AVL:
     def __init__(self):
         self.raiz = None
@@ -215,9 +195,6 @@ class AVL:
             else:
                 self.rotarDerecha(nodo)
 
-    # --------------------------------------------------------------
-    # REVISAR
-    # --------------------------------------------------------------
     def __iter__(self):
         return self.inorden_iter(self.raiz)
 
@@ -226,8 +203,6 @@ class AVL:
             yield from self.inorden_iter(nodo.hijoIzquierdo)
             yield nodo.clave
             yield from self.inorden_iter(nodo.hijoDerecho)
-
-    # --------------------------------------------------------------
 
     def obtener(self, clave):
         if self.raiz:
@@ -262,7 +237,6 @@ class AVL:
             self.tamano = self.tamano - 1
         else:
             raise KeyError("Error, la clave no está en el árbol")
-
 
     def remover(self, nodoActual):
         if nodoActual.esHoja():  # hoja
@@ -313,28 +287,4 @@ class AVL:
 # --------------------------------------------------------------------------------------------------------------
 
 # --------------------------------------------------------------------------------------------------------------
-arbol = AVL()
 
-raiz = None
-claves = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]
-
-
-for clave in claves:
-    raiz = arbol.agregar(clave, raiz)
-
-arbol.agregar(100, "Axel Escalante")
-
-# print(arbol.inorden(arbol.raiz))
-for clave in arbol:
-    print(clave)
-
-print('-------------------------------------------')
-for clave in claves:
-    arbol.eliminar(clave)
-
-arbol.eliminar(100)
-
-for clave in arbol:
-    print(clave)
-
-print(arbol.obtener(100))
