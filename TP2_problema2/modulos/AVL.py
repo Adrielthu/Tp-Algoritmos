@@ -50,6 +50,47 @@ class NodoArbol:
         if self.tieneHijoDerecho():
             self.hijoDerecho.padre = self
 
+    def encontrarMin(self):
+        actual = self
+        while actual.tieneHijoIzquierdo():
+            actual = actual.hijoIzquierdo
+        return actual
+
+    def encontrarSucesor(self):
+        suc = None
+        if self.tieneHijoDerecho():
+            suc = self.hijoDerecho.encontrarMin()
+        else:
+            if self.padre:
+                if self.esHijoIzquierdo():
+                    suc = self.padre
+                else:
+                    self.padre.hijoDerecho = None
+                    suc = self.padre.encontrarSucesor()
+                    self.padre.hijoDerecho = self
+        return suc
+
+    def empalmar(self):
+        if self.esHoja():
+            if self.esHijoIzquierdo():
+                self.padre.hijoIzquierdo = None
+            else:
+                self.padre.hijoDerecho = None
+        elif self.tieneAlgunHijo():
+            if self.tieneHijoIzquierdo():
+                if self.esHijoIzquierdo():
+                    self.padre.hijoIzquierdo = self.hijoIzquierdo
+                else:
+                    self.padre.hijoDerecho = self.hijoIzquierdo
+                self.hijoIzquierdo.padre = self.padre
+            else:
+                if self.esHijoIzquierdo():
+                    self.padre.hijoIzquierdo = self.hijoDerecho
+                else:
+                    self.padre.hijoDerecho = self.hijoDerecho
+                self.hijoDerecho.padre = self.padre
+
+
     def __iter__(self):
         if self:
             if self.tieneHijoIzquierdo():
@@ -61,6 +102,7 @@ class NodoArbol:
                     yield elem
 
 # --------------------------------------------------------------------------------------------------------------
+
 
 # --------------------------------------------------------------------------------------------------------------
 class AVL:
@@ -152,8 +194,12 @@ class AVL:
                 rotRaiz.padre.hijoDerecho = nuevaRaiz
         nuevaRaiz.hijoDerecho = rotRaiz
         rotRaiz.padre = nuevaRaiz
-        rotRaiz.factorEquilibrio += -1 - max(nuevaRaiz.factorEquilibrio, 0)
-        nuevaRaiz.factorEquilibrio += -1 - max(rotRaiz.factorEquilibrio, 0)
+        rotRaiz.factorEquilibrio = (
+            rotRaiz.factorEquilibrio - 1 - max(nuevaRaiz.factorEquilibrio, 0)
+        )
+        nuevaRaiz.factorEquilibrio = (
+            nuevaRaiz.factorEquilibrio - 1 + min(rotRaiz.factorEquilibrio, 0)
+        )
 
     def reequilibrar(self, nodo):
         if nodo.factorEquilibrio < 0:
@@ -169,9 +215,9 @@ class AVL:
             else:
                 self.rotarDerecha(nodo)
 
-# --------------------------------------------------------------
-                        # REVISAR
-# --------------------------------------------------------------
+    # --------------------------------------------------------------
+    # REVISAR
+    # --------------------------------------------------------------
     def __iter__(self):
         return self.inorden_iter(self.raiz)
 
@@ -180,7 +226,8 @@ class AVL:
             yield from self.inorden_iter(nodo.hijoIzquierdo)
             yield nodo.clave
             yield from self.inorden_iter(nodo.hijoDerecho)
-# --------------------------------------------------------------
+
+    # --------------------------------------------------------------
 
     def obtener(self, clave):
         if self.raiz:
@@ -216,45 +263,6 @@ class AVL:
         else:
             raise KeyError("Error, la clave no está en el árbol")
 
-    def empalmar(self):
-        if self.esHoja():
-            if self.esHijoIzquierdo():
-                self.padre.hijoIzquierdo = None
-            else:
-                self.padre.hijoDerecho = None
-        elif self.tieneAlgunHijo():
-            if self.tieneHijoIzquierdo():
-                if self.esHijoIzquierdo():
-                    self.padre.hijoIzquierdo = self.hijoIzquierdo
-                else:
-                    self.padre.hijoDerecho = self.hijoIzquierdo
-                self.hijoIzquierdo.padre = self.padre
-            else:
-                if self.esHijoIzquierdo():
-                    self.padre.hijoIzquierdo = self.hijoDerecho
-                else:
-                    self.padre.hijoDerecho = self.hijoDerecho
-                self.hijoDerecho.padre = self.padre
-
-    def encontrarSucesor(self):
-        suc = None
-        if self.tieneHijoDerecho():
-            suc = self.hijoDerecho.encontrarMin()
-        else:
-            if self.padre:
-                if self.esHijoIzquierdo():
-                    suc = self.padre
-                else:
-                    self.padre.hijoDerecho = None
-                    suc = self.padre.encontrarSucesor()
-                    self.padre.hijoDerecho = self
-        return suc
-
-    def encontrarMin(self):
-        actual = self
-        while actual.tieneHijoIzquierdo():
-            actual = actual.hijoIzquierdo
-        return actual
 
     def remover(self, nodoActual):
         if nodoActual.esHoja():  # hoja
@@ -310,12 +318,22 @@ arbol = AVL()
 raiz = None
 claves = [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]
 
+
 for clave in claves:
     raiz = arbol.agregar(clave, raiz)
 
 arbol.agregar(100, "Axel Escalante")
 
 # print(arbol.inorden(arbol.raiz))
+for clave in arbol:
+    print(clave)
+
+print('-------------------------------------------')
+for clave in claves:
+    arbol.eliminar(clave)
+
+arbol.eliminar(100)
+
 for clave in arbol:
     print(clave)
 
