@@ -25,10 +25,11 @@ class Grafo:
         self.numVertices = 0
 
     def agregarVertice(self,clave):
-        self.numVertices = self.numVertices + 1
-        nuevoVertice = Vertice(clave)
-        self.listaVertices[clave] = nuevoVertice
-        return nuevoVertice
+        if clave not in self.listaVertices:
+            self.numVertices = self.numVertices + 1
+            nuevoVertice = Vertice(clave)
+            self.listaVertices[clave] = nuevoVertice
+            return nuevoVertice
 
     def obtenerVertice(self,n):
         if n in self.listaVertices:
@@ -51,3 +52,12 @@ class Grafo:
 
     def __iter__(self):
         return iter(self.listaVertices.values())
+
+    def __str__(self):
+        result = ""
+        for vertice, conexiones in self.listaVertices.items():
+            result += f" {conexiones}\n"
+        return result
+
+#-----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------
