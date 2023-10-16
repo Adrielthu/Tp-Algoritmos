@@ -43,25 +43,26 @@ class Grafo:
 
     def camino(self,salida, destino):
         camino = []
-        actual = destino
+        actual = self.obtenerVertice(destino)
         while actual != None:
             camino.insert(0, actual)
-            actual = self.listaVertices[actual].predecesor
-        return [camino, self.listaVertices[destino].distancia]
+            actual = actual.obtenerPredecesor()
+        return [camino, self.listaVertices[destino].obtenerDistancia()]
     
     def dijkstra(self,unGrafo,inicio):
         cp = MonticuloBinarioTupla()
         if inicio in self.listaVertices:
+            inicio = self.obtenerVertice(inicio)
             inicio.asignarDistancia(0)
             cp.construirMonticulo([(v.obtenerDistancia(),v) for v in unGrafo])
             while not cp.estaVacia():
                 verticeActual = cp.eliminarMin()
-                for verticeSiguiente in verticeActual.obtenerConexiones():
-                    nuevaDistancia = verticeActual.obtenerDistancia() \
-                            + verticeActual.obtenerPonderacion(verticeSiguiente)
+                for verticeSiguiente in verticeActual[1].obtenerConexiones():
+                    nuevaDistancia = verticeActual[1].obtenerDistancia() \
+                            + verticeActual[1].obtenerPonderacion(verticeSiguiente)
                     if nuevaDistancia < verticeSiguiente.obtenerDistancia():
                         verticeSiguiente.asignarDistancia( nuevaDistancia )
-                        verticeSiguiente.asignarPredecesor(verticeActual)
+                        verticeSiguiente.asignarPredecesor(verticeActual[1])
                         cp.decrementarClave(verticeSiguiente,nuevaDistancia)
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------

@@ -6,6 +6,7 @@ class Vertice:
         self.distancia = float('inf')
         self.predecesor = None
         self.visitado = False
+        self.color = 'Blanco'
 
         
 
@@ -35,3 +36,11 @@ class Vertice:
     
     def obtenerDistancia(self):
         return self.distancia
+    
+    def recorrer(y):
+        x = y
+        while (x.obtenerPredecesor()):
+            print(x.obtenerId())
+            x = x.obtenerPredecesor()
+        print(x.obtenerId())
+
