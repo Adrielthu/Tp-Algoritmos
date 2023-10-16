@@ -54,17 +54,17 @@ class MonticuloBinarioTupla:
         for i in range(1, len(self.listaMonticulo)):
             yield self.listaMonticulo[i]
 
-    def decrementarClave(self, tupla, nueva_clave):
-        for i in range(1, len(self.listaMonticulo)):
-            if self.listaMonticulo[i] == tupla:
-                if nueva_clave > self.listaMonticulo[i][0]:
-                    # No se puede aumentar la clave
-                    return
 
-                self.listaMonticulo[i] = (nueva_clave, *self.listaMonticulo[i][1:])
-                self.infiltArriba(i)
-                break
     
-    def estaVacia(self):
-        return self.tamanoActual == 0
+    def decrementarClave(self, objeto, nueva_clave):
+            for i in range(1, len(self.listaMonticulo)):
+                if self.listaMonticulo[i][1] == objeto:
+                    tupla = self.listaMonticulo[i]
+                    if nueva_clave > tupla[0]:
+                        # No se puede aumentar la clave
+                        return
 
+                    nueva_tupla = (nueva_clave, objeto)
+                    self.listaMonticulo[i] = nueva_tupla
+                    self.infiltArriba(i)
+                    break

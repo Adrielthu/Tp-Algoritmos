@@ -63,6 +63,9 @@ class Grafo:
                     if nuevaDistancia < verticeSiguiente.obtenerDistancia():
                         verticeSiguiente.asignarDistancia( nuevaDistancia )
                         verticeSiguiente.asignarPredecesor(verticeActual[1])
+                        
+
+
                         cp.decrementarClave(verticeSiguiente,nuevaDistancia)
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------
