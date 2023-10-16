@@ -1,8 +1,8 @@
-from TP2_problema3.modulos.abb import Grafo
+from TP2_problema3.modulos.grafo import Grafo
 from TP2_problema3.modulos.vertice import Vertice
 import matplotlib.pyplot as plt
 import networkx as nx
-from TP2_problema3.modulos.monticulo_tupla import MonticuloBinarioTupla
+from TP2_problema3.modulos.monticulo_tupla import MonticuloBinarioTuplaMin, MonticuloBinarioTuplaMax
 
 with open('rutas.txt','r') as rutas:
     lectura = rutas.readlines()
@@ -33,6 +33,9 @@ print (grafo_peso)
 
 grafo_precio.dijkstra(grafo_precio,"CiudadBs.As.")
 print(grafo_precio.camino("CiudadBs.As.", "RioCuarto"))
+
+grafo_peso.dijkstra_peso(grafo_peso,"CiudadBs.As.")
+print(grafo_peso.camino("CiudadBs.As.", 'MarcosJuarez'))
 
 
 

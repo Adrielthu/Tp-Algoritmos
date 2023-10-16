@@ -3,7 +3,7 @@ class Vertice:
     def __init__(self,clave):
         self.id = clave
         self.conectadoA = {}
-        self.distancia = float('inf')
+        self.distancia = 0 #float('inf')
         self.predecesor = None
         self.visitado = False
         self.color = 'Blanco'
