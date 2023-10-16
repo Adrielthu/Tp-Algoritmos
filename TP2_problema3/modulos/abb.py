@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from TP2_problema3.modulos.vertice import Vertice
-
+from TP2_problema3.modulos.monticulo_tupla import MonticuloBinarioTupla
 class Grafo:
     def __init__(self):
         self.listaVertices = {}
@@ -41,7 +41,27 @@ class Grafo:
             result += f" {conexiones}\n"
         return result
 
-    def camino():
-        pass
+    def camino(self,salida, destino):
+        camino = []
+        actual = destino
+        while actual != None:
+            camino.insert(0, actual)
+            actual = self.listaVertices[actual].predecesor
+        return [camino, self.listaVertices[destino].distancia]
+    
+    def dijkstra(self,unGrafo,inicio):
+        cp = MonticuloBinarioTupla()
+        if inicio in self.listaVertices:
+            inicio.asignarDistancia(0)
+            cp.construirMonticulo([(v.obtenerDistancia(),v) for v in unGrafo])
+            while not cp.estaVacia():
+                verticeActual = cp.eliminarMin()
+                for verticeSiguiente in verticeActual.obtenerConexiones():
+                    nuevaDistancia = verticeActual.obtenerDistancia() \
+                            + verticeActual.obtenerPonderacion(verticeSiguiente)
+                    if nuevaDistancia < verticeSiguiente.obtenerDistancia():
+                        verticeSiguiente.asignarDistancia( nuevaDistancia )
+                        verticeSiguiente.asignarPredecesor(verticeActual)
+                        cp.decrementarClave(verticeSiguiente,nuevaDistancia)
 #-----------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------
