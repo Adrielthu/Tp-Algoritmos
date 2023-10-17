@@ -64,5 +64,7 @@ class MonticuloBinarioTupla:
                 self.listaMonticulo[i] = (nueva_clave, *self.listaMonticulo[i][1:])
                 self.infiltArriba(i)
                 break
-
+    
+    def estaVacia(self):
+        return self.tamanoActual == 0
 

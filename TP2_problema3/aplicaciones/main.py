@@ -31,8 +31,8 @@ for fila in tabla:
 print (grafo_peso)
 
 
-grafo_precio.dijkstra(grafo_precio,"CiudadBs.As")
-print(grafo_precio.camino("CiudadBs.As", "VillaMercedes"))
+grafo_precio.dijkstra(grafo_precio,"CiudadBs.As.")
+print(grafo_precio.camino("CiudadBs.As.", "RioCuarto"))
 
 
 
@@ -74,13 +74,13 @@ print(grafo_precio.camino("CiudadBs.As", "VillaMercedes"))
 
 
 
-G = nx.Graph()
+G = nx.DiGraph()
 
-for vertice in grafo_peso.obtenerVertices():
+for vertice in grafo_precio.obtenerVertices():
     G.add_node(vertice)
 
 # Agrega aristas desde tu grafo personalizado
-for vertice in grafo_peso:
+for vertice in grafo_precio:
     for vecino in vertice.obtenerConexiones():
         G.add_edge(vertice.obtenerId(), vecino.obtenerId(), weight=vertice.obtenerPonderacion(vecino))
 
