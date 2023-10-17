@@ -54,8 +54,6 @@ class MonticuloBinarioTupla:
         for i in range(1, len(self.listaMonticulo)):
             yield self.listaMonticulo[i]
 
-
-    
     def decrementarClave(self, objeto, nueva_clave):
             for i in range(1, len(self.listaMonticulo)):
                 if self.listaMonticulo[i][1] == objeto:
@@ -68,3 +66,6 @@ class MonticuloBinarioTupla:
                     self.listaMonticulo[i] = nueva_tupla
                     self.infiltArriba(i)
                     break
+
+    def estaVacia(self):
+        return self.tamanoActual == 0
