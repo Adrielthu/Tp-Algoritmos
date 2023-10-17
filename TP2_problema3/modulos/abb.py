@@ -37,8 +37,8 @@ class Grafo:
 
     def __str__(self):
         result = ""
-        for vertice, conexiones in self.listaVertices.items():
-            result += f" {conexiones}\n"
+        for valor in self.listaVertices.values():
+            result += f" {str(valor.id) } --> conectado a ---> { str([x for x in valor.conectadoA.keys()])}\n"
         return result
 
     def camino(self,salida, destino):
@@ -48,7 +48,7 @@ class Grafo:
             camino.insert(0, actual)
             actual = actual.obtenerPredecesor()
         return [camino, self.listaVertices[destino].obtenerDistancia()]
-    
+
     def dijkstra(self,unGrafo,inicio):
         cp = MonticuloBinarioTupla()
         if inicio in self.listaVertices:
@@ -63,8 +63,6 @@ class Grafo:
                     if nuevaDistancia < verticeSiguiente.obtenerDistancia():
                         verticeSiguiente.asignarDistancia( nuevaDistancia )
                         verticeSiguiente.asignarPredecesor(verticeActual[1])
-                        
-
 
                         cp.decrementarClave(verticeSiguiente,nuevaDistancia)
 #-----------------------------------------------------------------------------------------
