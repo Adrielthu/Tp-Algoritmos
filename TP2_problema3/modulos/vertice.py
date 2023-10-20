@@ -1,12 +1,9 @@
-
 class Vertice:
     def __init__(self,clave):
         self.id = clave
         self.conectadoA = {}
-        self.distancia = 0 #float('inf')
+        self.distancia = 0
         self.predecesor = None
-        self.visitado = False
-        self.color = 'Blanco'
 
     def agregarVecino(self,vecino,ponderacion=0):
         self.conectadoA[vecino] = ponderacion
