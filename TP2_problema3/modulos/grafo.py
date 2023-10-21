@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 from TP2_problema3.modulos.vertice import Vertice
-from TP2_problema3.modulos.monticulo_tupla import MonticuloBinarioTuplaMin, MonticuloBinarioTuplaMax
+from TP2_problema3.modulos.monticulo_min import MonticuloBinarioTuplaMin
+from TP2_problema3.modulos.monticulo_max import MonticuloBinarioTuplaMax
+
 class Grafo:
     def __init__(self):
         self.listaVertices = {}
@@ -50,11 +51,8 @@ class Grafo:
         return [camino, self.listaVertices[destino].obtenerDistancia()]
 
     def dijkstra(self,unGrafo,inicio):
-        """
-        """
-
-        for v in unGrafo: 
-             v.asignarDistancia(float("inf"))
+        for v in unGrafo:
+             v.asignarDistancia(float('inf'))
 
         cp = MonticuloBinarioTuplaMin()
         if inicio in self.listaVertices:
@@ -69,38 +67,25 @@ class Grafo:
                     if nuevaDistancia < verticeSiguiente.obtenerDistancia():
                         verticeSiguiente.asignarDistancia( nuevaDistancia )
                         verticeSiguiente.asignarPredecesor(verticeActual[1])
-
                         cp.decrementarClave(verticeSiguiente,nuevaDistancia)
 
-    
+
     def dijkstra_peso(self, unGrafo, inicio):
-        """
-        
-        
-        
-        """
         cp = MonticuloBinarioTuplaMax()
 
-        #for v in unGrafo: 
-             #v.asignarDistancia(0)  
-        
         if inicio in self.listaVertices:
             inicio = self.obtenerVertice(inicio)
-            inicio.asignarDistancia(float('inf'))  # La distancia al inicio es infinito negativo
+            inicio.asignarDistancia(float('inf'))
             cp.construirMonticulo([(v.obtenerDistancia(), v) for v in unGrafo])
-            
+
             while not cp.estaVacia():
                 verticeActual = cp.eliminarMax()
-                
+
                 for verticeSiguiente in verticeActual[1].obtenerConexiones():
                     nuevaDistancia = min(verticeActual[1].obtenerDistancia(),
                                         verticeActual[1].obtenerPonderacion(verticeSiguiente))
-                    
+
                     if nuevaDistancia > verticeSiguiente.obtenerDistancia():
                         verticeSiguiente.asignarDistancia(nuevaDistancia)
                         verticeSiguiente.asignarPredecesor(verticeActual[1])
-
                         cp.decrementarClave(verticeSiguiente, nuevaDistancia)
-#-----------------------------------------------------------------------------------------
-#-----------------------------------------------------------------------------------------
-    
