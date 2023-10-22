@@ -2,12 +2,12 @@ from TP2_problema3.modulos.grafo import Grafo
 import matplotlib.pyplot as plt
 import networkx as nx
 
-class EntornoRutas():
+class ServicioDeTransporte():
     def __init__(self):
         self.grafo_peso = Grafo()
         self.grafo_precio = Grafo()
 
-    def construir_grafo(self,archivo):
+    def construir_rutas(self,archivo):
         with open(archivo,'r') as rutas:
             lectura = rutas.readlines()
 
@@ -26,7 +26,7 @@ class EntornoRutas():
             self.grafo_peso.agregarArista(salida,destino,peso)
             self.grafo_precio.agregarArista(salida,destino,precio)
 
-    def numeroDeVertices(self):
+    def numeroDeCiudades(self):
         print(self.grafo_peso.numVertices)
 
     def mostrar_caminos(self):
@@ -34,12 +34,10 @@ class EntornoRutas():
 
     def precio_min(self,inicio,destino):
         self.grafo_precio.dijkstra(self.grafo_precio,inicio)
-        # print(self.grafo_precio.camino(inicio, destino))
 
         self.grafo_peso.dijkstra_peso(self.grafo_peso,inicio)
-        # print(self.grafo_peso.camino(inicio, destino))
 
-        resultado = f"Precio:\n{self.grafo_precio.camino(inicio, destino)}\n\nPeso:\n{self.grafo_peso.camino(inicio, destino)}"
+        resultado = f"El Precio:\n{self.grafo_precio.camino(inicio, destino)}\n\nEl Peso:\n{self.grafo_peso.camino(inicio, destino)}"
         print(resultado)
 
     def graficar(self, usar_grafo_precio=True):
@@ -55,13 +53,13 @@ class EntornoRutas():
         for vertice in grafo.obtenerVertices():
             G.add_node(vertice)
 
-        # Agrega aristas desde tu grafo personalizado
+        # Agrega aristas
         for vertice in grafo:
             for vecino in vertice.obtenerConexiones():
                 G.add_edge(vertice.obtenerId(), vecino.obtenerId(), weight=vertice.obtenerPonderacion(vecino))
 
         # Dibuja el gráfico
-        pos = nx.spring_layout(G)
+        pos = nx.spectral_layout(G)
         labels = {n: n for n in G.nodes()}
         nx.draw(G, pos, with_labels=True, labels=labels, node_color='skyblue', font_weight='bold', node_size=100)
 
