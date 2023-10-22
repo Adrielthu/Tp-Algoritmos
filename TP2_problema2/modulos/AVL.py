@@ -151,13 +151,21 @@ class AVL:
 
     def eliminar(self, clave):
         if self.tamano > 1:
+            # Busca el nodo a eliminar en el árbol
             nodoAEliminar = self._obtener(clave, self.raiz)
             if nodoAEliminar:
-
+                # Obtiene el padre del nodo a eliminar
                 padreNodoAEliminar = nodoAEliminar.padre
+
+                # Actualiza el equilibrio del árbol después de eliminar el nodo
                 self._actualizarEquilibrioEliminar(nodoAEliminar)
+
+                # Realiza la eliminación del nodo
                 self.remover(nodoAEliminar)
+
+                # Verifica si el equilibrio del árbol se ha desviado
                 if padreNodoAEliminar.factorEquilibrio > 1 or padreNodoAEliminar.factorEquilibrio < -1:
+                    # Reequilibra el árbol a partir del padre del nodo eliminado
                     self.reequilibrar(padreNodoAEliminar)
 
                 self.tamano = self.tamano - 1
@@ -170,19 +178,28 @@ class AVL:
             raise KeyError("Error, la clave no está en el árbol")
 
     def remover(self, nodoActual):
-        if nodoActual.esHoja():  # hoja
+        # Verifica si el nodo actual es una hoja (no tiene hijos)
+        if nodoActual.esHoja():
+            # Caso 1: El nodo a eliminar es una hoja
             if nodoActual == nodoActual.padre.hijoIzquierdo:
                 nodoActual.padre.hijoIzquierdo = None
             else:
                 nodoActual.padre.hijoDerecho = None
-        elif nodoActual.tieneAmbosHijos():  # interior
+
+        # Verifica si el nodo actual tiene dos hijos
+        elif nodoActual.tieneAmbosHijos():
+            # Caso 2: El nodo a eliminar tiene dos hijos
+            # En este caso, se encuentra el sucesor inmediato del nodo a eliminar,
+            # se "empalma" el sucesor en lugar del nodo a eliminar, y se copian los datos del sucesor.
             suc = nodoActual.encontrarSucesor()
             suc.empalmar()
             nodoActual.clave = suc.clave
             nodoActual.cargaUtil = suc.cargaUtil
 
-        else:  # este nodo tiene un (1) hijo
+        else:
+            # Caso 3: El nodo a eliminar tiene un solo hijo
             if nodoActual.tieneHijoIzquierdo():
+                # Caso 3.1: El nodo a eliminar tiene un hijo izquierdo
                 if nodoActual.esHijoIzquierdo():
                     nodoActual.hijoIzquierdo.padre = nodoActual.padre
                     nodoActual.padre.hijoIzquierdo = nodoActual.hijoIzquierdo
@@ -190,6 +207,7 @@ class AVL:
                     nodoActual.hijoIzquierdo.padre = nodoActual.padre
                     nodoActual.padre.hijoDerecho = nodoActual.hijoIzquierdo
                 else:
+                    # Caso especial: nodoActual no es hijo de su padre
                     nodoActual.reemplazarDatoDeNodo(
                         nodoActual.hijoIzquierdo.clave,
                         nodoActual.hijoIzquierdo.cargaUtil,
@@ -197,6 +215,7 @@ class AVL:
                         nodoActual.hijoIzquierdo.hijoDerecho,
                     )
             else:
+                # Caso 3.2: El nodo a eliminar tiene un hijo derecho
                 if nodoActual.esHijoIzquierdo():
                     nodoActual.hijoDerecho.padre = nodoActual.padre
                     nodoActual.padre.hijoIzquierdo = nodoActual.hijoDerecho
@@ -204,12 +223,14 @@ class AVL:
                     nodoActual.hijoDerecho.padre = nodoActual.padre
                     nodoActual.padre.hijoDerecho = nodoActual.hijoDerecho
                 else:
+                    # Caso especial: nodoActual no es hijo de su padre
                     nodoActual.reemplazarDatoDeNodo(
                         nodoActual.hijoDerecho.clave,
                         nodoActual.hijoDerecho.cargaUtil,
                         nodoActual.hijoDerecho.hijoIzquierdo,
                         nodoActual.hijoDerecho.hijoDerecho,
                     )
+
 
     def __delitem__(self, clave):
         self.eliminar(clave)
