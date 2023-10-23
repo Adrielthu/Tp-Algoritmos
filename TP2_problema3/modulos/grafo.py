@@ -91,7 +91,6 @@ class Grafo:
 
     def dijkstra_peso(self, unGrafo, inicio, destino):
         cp = MonticuloBinarioTuplaMax()
-
         caminos = []
         if inicio in self.listaVertices:
             inicio = self.obtenerVertice(inicio)
