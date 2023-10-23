@@ -11,8 +11,11 @@ ejemplo.numeroDeCiudades()
 #ejemplo.mostrar_caminos()
 
 #Recibe como parámetro una ciudad de inicio y una de destino
-ejemplo.precio_min("CiudadBs.As.", "LaRioja")
+ejemplo.precio_min("Rafaela","CiudadBs.As.")
 
-#ejemplo.graficar(usar_grafo_precio=True)
+# Esta grafica es para tener una idea de las conexiones
+# pero no representa el grafo real, ya que no puede hacer
+# todas las aristas
 
-#ejemplo.graficar(usar_grafo_precio=False)
+#ejemplo.graficar()
+
