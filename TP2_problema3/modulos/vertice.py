@@ -3,7 +3,7 @@ class Vertice:
         self.id = clave
         self.conectadoA = {}
         self.distancia = 0
-        self.predecesor = None  # Inicializar predecesor como None
+        self.predecesor = None
 
     def agregarVecino(self, vecino, ponderacion=0, segunda_ponderacion=0):
         self.conectadoA[vecino] = (ponderacion, segunda_ponderacion)
