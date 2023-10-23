@@ -6,14 +6,13 @@ class SalaEmergencia:
 
     def ingresar_paciente(self, paciente):
         self.monticulo.insertar(paciente)
-    
+
     def atender_paciente(self):
-       return self.monticulo.eliminarMin()
-    
+        paciente_atendido = self.monticulo.eliminarMin()
+        return paciente_atendido
+
     def total_pacientes(self):
         return self.monticulo.tamanoActual
-    
+
     def __iter__(self):
         return iter(self.monticulo)
-
-#prueba de dp

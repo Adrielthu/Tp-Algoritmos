@@ -20,7 +20,7 @@ class MonticuloBinario:
         self.infiltArriba(self.tamanoActual)
 
     def infiltAbajo(self, i):
-        # Realiza el proceso de filtrado hacia abajo (heapify) para mantener el orden del montículo.
+        # Realiza el proceso de filtrado hacia abajo para mantener el orden del montículo.
         while (i * 2) <= self.tamanoActual:
             hm = self.hijoMin(i)
             if self.listaMonticulo[i] > self.listaMonticulo[hm]:

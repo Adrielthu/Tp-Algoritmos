@@ -23,7 +23,7 @@ for i in range(n):
 
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
-    paciente = Paciente()
+    paciente = Paciente(ahora)
     cola_de_espera.ingresar_paciente(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
@@ -36,16 +36,16 @@ for i in range(n):
     else:
         # se continúa atendiendo paciente de ciclo anterior
         pass
-    
+
     print()
 
     # Se muestran los pacientes restantes en la cola de espera
     print('Pacientes que faltan atenderse:', cola_de_espera.total_pacientes())
     for paciente in cola_de_espera:
         print('\t', paciente)
-    
+
     print()
     print('-*-'*15)
-    
+
     time.sleep(1)
 
