@@ -7,7 +7,7 @@ class ServicioDeTransporte:
     def __init__(self):
         self.grafo = Grafo()
 
-    def construir_grafo(self, archivo):
+    def construir_rutas(self, archivo):
         with open(archivo, "r") as rutas:
             lectura = rutas.readlines()
 
@@ -24,7 +24,7 @@ class ServicioDeTransporte:
             precio = int(fila[3])
             self.grafo.agregarArista(salida, destino, peso, precio)
 
-    def numeroDeVertices(self):
+    def numeroDeCiudades(self):
         print(self.grafo.numVertices)
 
     def mostrar_caminos(self):
