@@ -29,14 +29,6 @@ class Grafo:
                 if a not in self.listaVertices:
                     nv = self.agregarVertice(a)
                 self.listaVertices[de].agregarVecino(self.listaVertices[a], ponderacion,segunda_ponderacion)
-                #self.listaVertices[de].segunda_ponderacion = segunda_ponderacion  # Asigna la segunda ponderación
-
-    # def agregarArista(self,de,a,costo=0):
-    #     if de not in self.listaVertices:
-    #         nv = self.agregarVertice(de)
-    #     if a not in self.listaVertices:
-    #         nv = self.agregarVertice(a)
-    #     self.listaVertices[de].agregarVecino(self.listaVertices[a], costo)
 
     def obtenerVertices(self):
         return self.listaVertices.keys()
@@ -50,22 +42,32 @@ class Grafo:
             result += f" {str(valor.id) } --> conectado a ---> { str([x for x in valor.conectadoA.keys()])}\n"
         return result
 
-    def camino(self, unGrafo, salida, destino):
-        grafo_peso = self.dijkstra_peso(unGrafo, salida, destino)
-        grafo_peso.dijkstra(grafo_peso,salida)
-        camino = []
-        actual = self.obtenerVertice(destino)
+    def camino(self,unGrafo, salida, destino):
+        if salida in unGrafo.listaVertices and destino in unGrafo.listaVertices:
+            grafo_peso = self.dijkstra_peso(unGrafo,salida, destino)
+            distancias = []
+        else:
+            raise RuntimeError("Verifique la ciudad de inicio o de destino")
+        if grafo_peso:
+            for grafo in grafo_peso:
+                grafo.dijkstra(grafo,salida)
+                distancia_precio = grafo.obtenerVertice(destino).obtenerDistancia()
+                distancias.append([grafo,distancia_precio])
 
-        while actual is not None:
-            camino.insert(0, actual)
-            actual = actual.obtenerPredecesor()
+            grafo_distancia = min(distancias, key=lambda x: x[1])
 
-        distancia_precio = grafo_peso.obtenerVertice(destino).obtenerDistancia()
-        distancia_peso = self.listaVertices[destino].obtenerDistancia()
+            distancia_precio = grafo_distancia[1]
+            distancia_peso = self.listaVertices[destino].obtenerDistancia()
 
-        return camino, distancia_peso , distancia_precio
+            camino = []
+            actual = self.obtenerVertice(destino)
+            while actual != None:
+                camino.insert(0, actual)
+                actual = actual.obtenerPredecesor()
 
-
+            return camino, distancia_peso, distancia_precio
+        else:
+            return RuntimeError("No existe camino a ese destino")
 
     def dijkstra(self,unGrafo,inicio):
         for v in unGrafo:
@@ -89,7 +91,7 @@ class Grafo:
 
     def dijkstra_peso(self, unGrafo, inicio, destino):
         cp = MonticuloBinarioTuplaMax()
-        otroGrafo = Grafo()
+
         caminos = []
         if inicio in self.listaVertices:
             inicio = self.obtenerVertice(inicio)
@@ -107,32 +109,17 @@ class Grafo:
                         verticeSiguiente.asignarDistancia(nuevaDistancia)
                         verticeSiguiente.asignarPredecesor(verticeActual[1])
                         cp.decrementarClave(verticeSiguiente, nuevaDistancia)
-#-----------------------------------------------------------------------------------------------------------
-                if verticeSiguiente.obtenerId() == destino:
-                    # Se alcanzó el vértice de destino, construir un nuevo grafo (camino)
-                    nuevoGrafo = Grafo()
-                    destino = self.obtenerVertice(destino)
-                    while destino.obtenerPredecesor() is not None:
-                        predecesor = destino.obtenerPredecesor()
-                        ponderacion_primera = predecesor.obtenerPonderacion(destino)
-                        ponderacion_segunda = predecesor.obtenerSegundaPonderacion(destino)
-                        nuevoGrafo.agregarArista(predecesor.obtenerId(), destino.obtenerId(), ponderacion_primera, ponderacion_segunda)
-                        destino = predecesor
 
-                    caminos.append(nuevoGrafo)
-        caminos_unicos = []
-        for camino in caminos:
-            if camino not in caminos_unicos:
-                caminos_unicos.append(camino)
+                        if verticeSiguiente.obtenerId() == destino:
 
-        return caminos_unicos
-        # Construir el camino en el nuevo grafo con ambas ponderaciones
-        # destino = self.obtenerVertice(destino)
-        # while destino.obtenerPredecesor() is not None:
-        #     predecesor = destino.obtenerPredecesor()
-        #     ponderacion_primera = predecesor.obtenerPonderacion(destino)
-        #     ponderacion_segunda = predecesor.obtenerSegundaPonderacion(destino)
-        #     otroGrafo.agregarArista(predecesor.obtenerId(), destino.obtenerId(), ponderacion_primera, ponderacion_segunda)
-        #     destino = predecesor
+                            nuevoGrafo = Grafo()
+                            destino = self.obtenerVertice(destino)
+                            while destino.obtenerPredecesor() is not None:
+                                predecesor = destino.obtenerPredecesor()
+                                ponderacion_primera = predecesor.obtenerPonderacion(destino)
+                                ponderacion_segunda = predecesor.obtenerSegundaPonderacion(destino)
+                                nuevoGrafo.agregarArista(predecesor.obtenerId(), destino.obtenerId(), ponderacion_primera, ponderacion_segunda)
+                                destino = predecesor
+                            caminos.append(nuevoGrafo)
 
-        # return otroGrafo
+        return caminos
