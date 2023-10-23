@@ -1,6 +1,6 @@
-from TP2_problema3.modulos.entorno import EntornoRutas
+from TP2_problema3.modulos.entorno import ServicioDeTransporte
 
-ejemplo = EntornoRutas()
+ejemplo = ServicioDeTransporte()
 
 # Recibe como parámetro un archivo
 ejemplo.construir_grafo("rutas.txt")
@@ -10,9 +10,11 @@ ejemplo.numeroDeVertices()
 ejemplo.mostrar_caminos()
 
 #Recibe como parámetro una ciudad de inicio y una de destino
-ejemplo.precio_min("CiudadBs.As.", "VillaMercedes")
+ejemplo.precio_min("Rafaela","CiudadBs.As.")
 
+# Esta grafica es para tener una idea de las conexiones
+# pero no representa el grafo real, ya que no puede hacer
+# todas las aristas
 
-# ejemplo.graficar(usar_grafo_precio=True)
+#ejemplo.graficar()
 
-# ejemplo.graficar(usar_grafo_precio=False)
