@@ -8,6 +8,20 @@ class Grafo:
         self.numVertices = 0
 
     def agregarVertice(self,clave):
+        """
+        Esta funcion agrega un vertice a la clase Grafo
+
+        Parametros
+        ------------
+        clave: TYPE: clave
+                    Identifica el al vertice que se va a agregar
+
+        Descripcion
+        --------------
+        Crea al Vertice y lo agraga al Grafo
+   
+        
+        """
         if clave not in self.listaVertices:
             self.numVertices = self.numVertices + 1
             nuevoVertice = Vertice(clave)
@@ -24,6 +38,23 @@ class Grafo:
         return n in self.listaVertices
 
     def agregarArista(self, de, a, ponderacion=0, segunda_ponderacion=0):
+                """
+                Agrega arista entre dos vertices del grafo
+                
+                Parametros
+                ------------
+                de: TYPE: str
+                        Clave del Vertice de origen
+                a: TYPE: str
+                        clave del Verice de destino
+                Ponderacion: int
+                Segunda_ponderacion: int
+                
+                Descripcion
+                ------------
+                Esta funcion agrega una arista del vertice de al vertice a                
+                                
+                """
                 if de not in self.listaVertices:
                     nv = self.agregarVertice(de)
                 if a not in self.listaVertices:
@@ -43,6 +74,21 @@ class Grafo:
         return result
 
     def camino(self,unGrafo, salida, destino):
+        """
+        Esta funcion aplica los agloritmos dijkstra y dijstra_peso para
+        encontrar el camino con mayor peso y su vez el menor precio
+
+        Parametros
+        -----------
+        unGrafo: TYPE: grafo
+        
+        inicio: TYPE: vertice
+        destino: TYPE: vertice
+                    Indcican el vetice de destino y el vertice de salida
+        
+        
+        
+        """
         if salida in unGrafo.listaVertices and destino in unGrafo.listaVertices:
             grafo_peso = self.dijkstra_peso(unGrafo,salida, destino)
             distancias = []
@@ -70,6 +116,19 @@ class Grafo:
             return RuntimeError("No existe camino a ese destino")
 
     def dijkstra(self,unGrafo,inicio):
+        """
+        Esta funcion encuentra el precio minimo de vertice de inicio hacia todos
+        los vertices del grafo
+
+        Parametros
+        -----------
+        unGrafo: TYPE: Grafo
+
+        inicio: TYPE: vertice
+                    es el vertice de inicio del algoritmos dijkstra
+        
+        
+        """
         for v in unGrafo:
              v.asignarDistancia(float('inf'))
 
@@ -90,6 +149,20 @@ class Grafo:
 
 
     def dijkstra_peso(self, unGrafo, inicio, destino):
+        """
+        Esta funcion encuentra el maximo peso (cuello de botella) de un
+        vertice de inicio hacia un vetice de destino
+
+        Parametros
+        -----------
+        unGrafo: TYPE: Grafo
+
+        inicio: TYPE: vertice
+                    es el vertice de inicio del algoritmo
+        destino: TYPE: vertice
+                    vertice de llegada del algoritmo
+        
+        """
         cp = MonticuloBinarioTuplaMax()
         caminos = []
         if inicio in self.listaVertices:
